@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: crew_ai_app
+    env_file:
+      - .env
+    # network_mode: "host" can help if you have VPN/proxy issues, but "bridge" is default
+    # Using host network to bypass potential bridge network restrictions for now
+    network_mode: "host"
+    environment:
+      - MLFLOW_TRACKING_URI=http://localhost:5000
+    # depends_on:
+    #   - mlflow_server
+    volumes:
+      - .:/app
+    # Keep the container running if needed, or remove if it's a one-off task
+    command: python -m src.main.main
+
+  mlflow_server:
+    image: ghcr.io/mlflow/mlflow:v2.12.1
+    container_name: mlflow_server
+    network_mode: "host"
+    # ports:
+    #   - "5000:5000"
+    command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 0.0.0.0

@@ -1,0 +1,11 @@
+crewai
+mlflow
+langsmith
+opentelemetry-api
+opentelemetry-sdk
+openinference-instrumentation-crewai
+openinference-instrumentation-openai
+python-dotenv
+litellm
+apscheduler
+email-validator
